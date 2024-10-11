@@ -10,7 +10,8 @@ builder.Services.AddSwaggerGen();
 // Add Database
 builder.Services.AddDbContext<MoodDb>(opts =>
 {
-    opts.UseNpgsql(builder.Configuration["Moods:PostgresConnection"]);
+    var connectionString = Environment.GetEnvironmentVariable("AZURE_POSTGRESQL_CONNECTIONSTRING");
+    opts.UseNpgsql(connectionString ?? builder.Configuration["Moods:PostgresConnection"]);
 });
 
 var app = builder.Build();
